@@ -59,6 +59,7 @@ const Navbar = ({ setShowLogin }) => {
         </div>
         <button onClick={() => setShowLogin(true)}>Sign in</button>
       </div>
+      
     </div>
   );
 };

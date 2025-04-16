@@ -16,10 +16,16 @@ const StoreContextProvider = (props) => {
   }, []);
 
   // Save cart to localStorage whenever it changes
-  useEffect(() => {
-    localStorage.setItem("cartItems", JSON.stringify(cartItems));
-    console.log("Cart Updated:", cartItems);
-  }, [cartItems]);
+  const getTotalCartAmount = () => {
+    let totalAmount = 0;
+    for (const item in cartItems) {
+      if (cartItems[item] > 0) {
+        let itemInfo = food_list.find((product) => product._id === item);
+        totalAmount += itemInfo.price * cartItems[item];
+      }
+    }
+    return totalAmount;
+  };
 
   // Add item to cart
   const addToCart = (itemId) => {
@@ -60,6 +66,7 @@ const StoreContextProvider = (props) => {
     addToCart,
     removeFromCart,
     clearCart,
+    getTotalCartAmount
   };
 
   return (

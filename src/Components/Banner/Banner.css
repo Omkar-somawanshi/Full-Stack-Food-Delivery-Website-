@@ -1,0 +1,115 @@
+.banner-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    max-height: 700px;
+    overflow: hidden;
+    border-radius: 24px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(135deg, #ff6f00 0%, #ff9100 100%);
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0 5%;
+    box-sizing: border-box;
+  }
+  
+  .banner-image {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    max-height: 100%;
+    width: auto;
+    object-fit: contain;
+    z-index: 1;
+    animation: floatBike 4s ease-in-out infinite;
+    filter: drop-shadow(2px 4px 10px rgba(0, 0, 0, 0.2));
+  }
+  
+  .banner-text {
+    position: relative;
+    z-index: 2;
+    color: #fff;
+    max-width: 500px;
+    backdrop-filter: blur(4px);
+    padding: 20px 30px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+  }
+  
+  .banner-text h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    line-height: 1.2;
+    color: #fff;
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+  }
+  
+  .banner-text p {
+    font-size: 1.3rem;
+    line-height: 1.6;
+    margin-bottom: 25px;
+    color: #fefefe;
+  }
+  
+  .banner-btn {
+    background: linear-gradient(135deg, #ff580a, #ff7e20);
+    color: #fff;
+    padding: 14px 28px;
+    border: none;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  .banner-btn:hover {
+    transform: scale(1.05);
+    background: linear-gradient(135deg, #ff3d00, #ff6d00);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Animations */
+  @keyframes floatBike {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-8px);
+    }
+  }
+  
+  /* Responsive tweaks */
+  @media (max-width: 768px) {
+    .banner-container {
+      flex-direction: column;
+      justify-content: center;
+      padding: 20px;
+    }
+  
+    .banner-image {
+      position: relative;
+      width: 100%;
+      height: auto;
+      max-width: 350px;
+      margin-top: 20px;
+    }
+  
+    .banner-text {
+      text-align: center;
+      padding: 20px;
+    }
+  
+    .banner-text h1 {
+      font-size: 2rem;
+    }
+  
+    .banner-text p {
+      font-size: 1.1rem;
+    }
+  }
+  
