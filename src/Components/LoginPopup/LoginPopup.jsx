@@ -1,30 +1,97 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import './LoginPopup.css';
 import { assets } from '../../assets/assets';
+import { StoreContext } from '../../Context/StoreContext';
+import axios from 'axios';
 
 const LoginPopup = ({ setShowLogin }) => {
+  const { url, setToken } = useContext(StoreContext);
   const [currState, setCurrState] = useState("Login");
+  const [data, setData] = useState({
+    name: "",
+    email: "",
+    password: ""
+  });
+
+  const [agreed, setAgreed] = useState(false);
+
+  const onChangeHandler = (event) => {
+    const { name, value } = event.target;
+    setData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const onLogin = async (event) => {
+    event.preventDefault();
+    let newUrl = url;
+
+    if (currState === "Login") {
+      newUrl += '/api/user/login';
+    } else {
+      newUrl += '/api/user/register';
+    }
+
+    try {
+      const response = await axios.post(newUrl, data);
+
+      if (response.data.success) {
+        setToken(response.data.token);
+        localStorage.setItem("token", response.data.token);
+        setShowLogin(false);
+      } else {
+        alert(response.data.message);
+      }
+    } catch (error) {
+      console.error("Login/Register Error:", error.response?.data || error.message);
+      alert("Something went wrong. Please try again later.");
+    }
+  };
 
   return (
     <div className="login-popup">
-      <form className="login-popup-container">
+      <form onSubmit={onLogin} className="login-popup-container">
         <div className="login-popup-title">
           <h2>{currState}</h2>
           <img onClick={() => setShowLogin(false)} src={assets.cross_icon} alt="close" />
         </div>
 
         <div className="login-popup-inputs">
-          {currState === "Login" ? null : (
-            <input type='text' placeholder='Your name' required />
+          {currState === "Sign Up" && (
+            <input
+              name="name"
+              onChange={onChangeHandler}
+              value={data.name}
+              type="text"
+              placeholder="Your name"
+              required
+            />
           )}
-          <input type="email" placeholder='Your email' required />
-          <input type="password" placeholder='Password' required />
+          <input
+            name="email"
+            onChange={onChangeHandler}
+            value={data.email}
+            type="email"
+            placeholder="Your email"
+            required
+          />
+          <input
+            name="password"
+            onChange={onChangeHandler}
+            value={data.password}
+            type="password"
+            placeholder="Password"
+            required
+          />
         </div>
 
         <button type="submit">{currState === "Sign Up" ? "Create Account" : "Login"}</button>
 
         <div className="login-popup-condition">
-          <input type="checkbox" required />
+          <input
+            type="checkbox"
+            required
+            checked={agreed}
+            onChange={() => setAgreed(!agreed)}
+          />
           <p>By continuing, I agree to the terms of use & privacy policy.</p>
         </div>
 
